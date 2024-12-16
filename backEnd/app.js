@@ -6,6 +6,7 @@ import router from './routes/routes.js';
 
 const app= express();
 app.use(cors())
+app.use(express.json())
 const puerto= 8000;
 
 try {

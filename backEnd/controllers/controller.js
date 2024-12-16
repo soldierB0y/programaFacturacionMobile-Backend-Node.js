@@ -173,27 +173,56 @@ export const getClientes= async(req,res)=>{
 }
 //agregarCliente
 export const addClientes= async(req,res)=>{
-    console.log(req.body.nombre)
 
 
+    
+    const nombre = req.body.nombre || null;
+    const tipoCliente= req.body.tipoCliente || null;
+    const sexo= req.body.sexo || null;
+    const empresa= req.body.empresa || null;
+    const direccion= req.body.direccion || null;
+    const balance= req.body.balance || null;
+    const deuda= req.body.fechaCreacion || null;
+    const fechaCreacion= Date.now();
+    const fechaModifacion= Date.now();
+    const correo= req.body.correo;
+    const montoTotalCompras= req.body.montoTotalCompras || null;
+    const descripcionModificacion= req.body.descripcionModificacion || null;
+    
+    if (nombre != null)
+    {
+        try {
+            const clientes= clientesModelo.create({
+                tipoCliente:tipoCliente,
+                sexo:sexo,
+                empresa:empresa,
+                direccion:direccion,
+                balance:balance,
+                deuda:deuda,
+                fechaCreacion:fechaCreacion,
+                fechaModifacion:fechaModifacion,
+                correo:correo,
+                montoTotalCompras:montoTotalCompras,
+                descripcionModificacion:descripcionModificacion
+            })
 
-    /*
-    const clientes= clientesModelo.create({
-        tipoCliente:'basico',
-        sexo:'masculino',
-        empresa:'Ferreteria Yenri',
-        direccion:'marginal las americas km 13 1/2 calle buenos aires ',
-        balance:0,
-        deuda:0,
-        fechaCreacion:Date.now(),
-        fechaModifacion:Date.now(),
-        correo:'jebatistav14@gmail.com',
-        montoTotalCompras:10000,
-        descripcionModificacion:'Lo hizo feleh'
-    })
-*/
+            res.status(200).json(
+                {
+                    "message":"Agregado exitosamente!"
+                }
+            )
 
+        } catch (error) {
+            res.status(400).json(
+                {
+                    "Error":"Error al tratar de realizar el registro"+error
+                }
+            )
+        }
 
+        
+    }
+    
 }
 
 
