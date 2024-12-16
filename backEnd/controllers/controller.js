@@ -30,10 +30,20 @@ export const getUsuarios = async (req,res)=>{
 
 export const verificarUsuario= async (req,res)=>{
 
-        const usuario=req.query.usuario;
-        const clave= req.query.clave;
+        let usuario=null;
+        let  clave= null;
+
+        try
+        {
+             usuario=req.query.usuario;
+             clave= req.query.clave;
+        }
+        catch{
+             usuario=null;
+             clave=null;
+        }
         
-        if (usuario.length > 0 && clave.length > 0)
+        if (usuario !=null && clave !=null)
         {
             const confirmarUsuario= async ()=>
             {
@@ -50,12 +60,12 @@ export const verificarUsuario= async (req,res)=>{
             {
                 
             
-                res.json({validated:'true'});
+                res.json({validated:true});
                 res.status(200);
             }
             else
             {
-                res.json({validated:'false'});
+                res.json({validated:false});
                 res.status(400);
 
             }
@@ -63,7 +73,7 @@ export const verificarUsuario= async (req,res)=>{
         else
         {
             res.json({
-                validated:'false'
+                validated:false
                 ,message:"debe rellenar las credenciales"
             });
             res.status(400);
@@ -137,7 +147,7 @@ export const recoverAccount = async (req,res)=>
     }
     else
     {
-        res.json({validated:'false',message:'debe rellenar las credenciales'});
+        res.json({validated:false,message:'debe rellenar las credenciales'});
         res.status(400);
     }
     

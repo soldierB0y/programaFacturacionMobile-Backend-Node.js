@@ -1,9 +1,11 @@
 import express from 'express';
 import {getUsuarios, recoverAccount, verificarUsuario} from './controllers/controller.js'
 import db from './database/database.js';
-
+import cors from 'cors';
+import router from './routes/routes.js';
 
 const app= express();
+app.use(cors())
 const puerto= 8000;
 
 try {
@@ -16,10 +18,7 @@ catch(ex)
 }
 
 
-app.get('/login/',getUsuarios);
-app.post('/login/',verificarUsuario);
-app.post('/recovery/',recoverAccount)
-
+app.use(router)
 
 
 
