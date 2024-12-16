@@ -8,7 +8,7 @@ import { DataTypes,Sequelize } from "sequelize";
 
 // Definir el modelo 'usuarios'
 
-    const usuariosModelo = db.define('usuario', {
+    export const usuariosModelo = db.define('usuario', {
         IDUsuario: {
             type: DataTypes.BIGINT,
             allowNull: false,
@@ -55,5 +55,72 @@ import { DataTypes,Sequelize } from "sequelize";
         tableName: 'usuario', // Nombre de la tabla en la base de datos
     });
     
+   export const clientesModelo = db.define('clientes',{
+        IDCliente:{
+            type:DataTypes.BIGINT,
+            allowNull:false,
+            primaryKey:true,
+            autoIncrement:true
+        },
+        IDRNC:{
+            type: DataTypes.BIGINT,
+            allowNull:true
+        },
+        tipoCliente:{
+            type:DataTypes.STRING,
+            allowNull:true
+        },
+        sexo:{
+            type:DataTypes.CHAR,
+            allowNull:true
+        },
+        cedula:{
+            type: DataTypes.STRING,
+            allowNull:true
+        },
+        empresa:{
+            type: DataTypes.STRING,
+            allowNull:true
+        }
+        ,
+        direccion:{
+            type: DataTypes.STRING,
+            allowNull:true
+        },
+        balance:{
+            type: DataTypes.DOUBLE,
+            allowNull:true
+        },
+        deuda:{
+            type: DataTypes.DOUBLE,
+            allowNull:true
+        },
+        fechaCreacion:{
+            type: DataTypes.DATE,
+            allowNull:true
+        },
+        fechaModificacion:{
+            type: DataTypes.DATE,
+            allowNull:true
+        },
+        correo:{
+            type: DataTypes.STRING,
+            allowNull:true
+        },
+        imagen:{
+            type: DataTypes.BLOB,
+            allowNull:true
+        },
+        montoTotalCompras:{
+            type: DataTypes.DOUBLE,
+            allowNull:true
+        },
+        descripcionModificacion:{
+            type: DataTypes.STRING,
+            allowNull:true
+        }
 
-export default usuariosModelo;
+    },{
+        timestamps:false,
+        tableName:'Clientes'
+    })

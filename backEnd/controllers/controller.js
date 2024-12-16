@@ -1,5 +1,5 @@
 
-import usuariosModelo from '../model/model.js';
+import {clientesModelo, usuariosModelo} from '../model/model.js';
 import { stringify, v4 } from 'uuid';
 
 import { json } from 'sequelize';
@@ -155,8 +155,46 @@ export const recoverAccount = async (req,res)=>
 }
 
 
+/*Clientes*/
+
+//cargarClientes
+export const getClientes= async(req,res)=>{
+    try {
+        const clientes = await clientesModelo.findAll()
+        res.status(200).json(clientes)
+        
+    } catch (error) {
+        console.log('error'+error)
+    }
+
+    
+    
+
+}
+//agregarCliente
+export const addClientes= async(req,res)=>{
+    console.log(req.body.nombre)
 
 
+
+    /*
+    const clientes= clientesModelo.create({
+        tipoCliente:'basico',
+        sexo:'masculino',
+        empresa:'Ferreteria Yenri',
+        direccion:'marginal las americas km 13 1/2 calle buenos aires ',
+        balance:0,
+        deuda:0,
+        fechaCreacion:Date.now(),
+        fechaModifacion:Date.now(),
+        correo:'jebatistav14@gmail.com',
+        montoTotalCompras:10000,
+        descripcionModificacion:'Lo hizo feleh'
+    })
+*/
+
+
+}
 
 
 
