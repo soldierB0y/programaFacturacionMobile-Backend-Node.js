@@ -66,6 +66,10 @@ import { DataTypes,Sequelize } from "sequelize";
             type: DataTypes.BIGINT,
             allowNull:true
         },
+        nombreRepresentante:{
+            type:DataTypes.STRING,
+            allowNull:true
+        },
         tipoCliente:{
             type:DataTypes.STRING,
             allowNull:true

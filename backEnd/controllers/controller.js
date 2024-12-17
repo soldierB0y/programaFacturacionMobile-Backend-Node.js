@@ -2,7 +2,7 @@
 import {clientesModelo, usuariosModelo} from '../model/model.js';
 import { stringify, v4 } from 'uuid';
 
-import { json } from 'sequelize';
+import { json, where } from 'sequelize';
 import {Resend} from 'resend';
 import isOnline from 'is-online';
 
@@ -177,6 +177,7 @@ export const addClientes= async(req,res)=>{
 
     
     const nombre = req.body.nombre || null;
+    console.log('NOMBRE:'+nombre)
     const tipoCliente= req.body.tipoCliente || null;
     const sexo= req.body.sexo || null;
     const empresa= req.body.empresa || null;
@@ -192,8 +193,9 @@ export const addClientes= async(req,res)=>{
     if (nombre != null)
     {
         try {
-            const clientes= clientesModelo.create({
+            const clientes= await clientesModelo.create({
                 tipoCliente:tipoCliente,
+                nombreRepresentante:nombre,
                 sexo:sexo,
                 empresa:empresa,
                 direccion:direccion,
@@ -206,11 +208,24 @@ export const addClientes= async(req,res)=>{
                 descripcionModificacion:descripcionModificacion
             })
 
-            res.status(200).json(
-                {
-                    "message":"Agregado exitosamente!"
-                }
-            )
+
+
+            if (clientes !=0 || clientes != null || clientes !=undefined)
+            {
+                res.status(200).json(
+                    {
+                        "message":"Agregado exitosamente!"
+                    }
+                )
+            }
+            else
+            {
+                res.status(400).json(
+                    {
+                        'message':'No se ha podido agregar el cliente'
+                    }
+                )
+            }
 
         } catch (error) {
             res.status(400).json(
@@ -221,6 +236,104 @@ export const addClientes= async(req,res)=>{
         }
 
         
+    }
+    else
+    {
+        res.status(400).json({"Error":"Error al tratar de realizar el registro"});
+    }
+    
+}
+
+//eliminar
+export const eliminarClientes= async(req,res)=>{
+    const IDCliente= req.body.IDCliente || null;
+
+    if (IDCliente==null)
+    {
+        res.status(400).json({'Error':' Fallo al intentar localizar cliente solicitado.'})
+    }
+    else
+    {
+        try {
+            
+        // esta funcion aparentemente retorna o un 0 o un 1 dependiendo cual sea el resultado
+          const resultado= await  clientesModelo.destroy({
+                where:{
+                    IDCliente:IDCliente
+                }
+            })
+            if (resultado==1)
+            {
+                res.status(200).json({'message':'Cliente eliminado exitosamente'});
+            }
+            else{
+                res.status(400).json({'message':'No se ha encontrado el cliente'})
+            }
+
+
+        } catch (error) {
+
+            console.log(error);   
+            res.status(400).json({'Error':'Error con la peticion'})
+        }
+
+    }
+}
+
+//modificar
+export const modificarClientes= async(req,res)=>{
+
+    const IDCliente= req.body.IDCliente || null;
+    const nombre = req.body.nombre || null;
+    const tipoCliente= req.body.tipoCliente || null;
+    const sexo= req.body.sexo || null;
+    const empresa= req.body.empresa || null;
+    const direccion= req.body.direccion || null;
+    const balance= req.body.balance || null;
+    const deuda= req.body.fechaCreacion || null;
+    const fechaModifacion= Date.now();
+    const correo= req.body.correo;
+    const montoTotalCompras= req.body.montoTotalCompras || null;
+    const descripcionModificacion= req.body.descripcionModificacion || null;
+
+    if (IDCliente ==null)
+    {
+        res.status(400).json({'Error':'Error con la peticion'})   
+    }
+    else
+    {
+        try {
+            const resultado= await clientesModelo.update({
+                nombreRepresentante: nombre!=null?nombre:undefined,
+                tipoCliente:tipoCliente!=null?tipoCliente:undefined,
+                sexo:sexo!=null?sexo:undefined,
+                empresa:empresa!=null?empresa:undefined,
+                direccion:direccion!=null?direccion:undefined,
+                balance:balance!=null?balance:undefined,
+                deuda:deuda!=null?deuda:undefined,
+                fechaModifacion:fechaModifacion!=null?fechaModifacion:undefined,
+                correo:correo!=null?correo:undefined,
+                montoTotalCompras:montoTotalCompras!=null?montoTotalCompras:undefined,
+                descripcionModificacion:descripcionModificacion!=null?descripcionModificacion:undefined
+            },{
+                where:{
+                    IDCliente:IDCliente
+                }
+            })
+            
+            if(resultado ==1)
+            {
+                res.status(200).json({'message':'actualizado exitosamente'})
+            }
+            else
+            {
+                res.status(400).json({'message':'no se ha encontrado al cliente'});
+            }
+
+            
+        } catch (error) {
+            res.status(400).json({'Error':'Error con la peticion'})   
+        }
     }
     
 }
