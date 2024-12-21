@@ -174,7 +174,7 @@ export const getClientes= async(req,res)=>{
 //agregarCliente
 export const addClientes= async(req,res)=>{
 
-
+    console.log(req.body)
     
     const nombre = req.body.nombre || null;
     console.log('NOMBRE:'+nombre)
@@ -239,7 +239,7 @@ export const addClientes= async(req,res)=>{
     }
     else
     {
-        res.status(400).json({"Error":"Error al tratar de realizar el registro"});
+        res.status(400).json({"Error":"Error al tratar de realizar el registro. Proporcione un nombre"});
     }
     
 }
