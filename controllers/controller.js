@@ -184,6 +184,7 @@ export const addClientes= async(req,res)=>{
     const direccion= req.body.direccion || null;
     const balance= req.body.balance || null;
     const deuda= req.body.fechaCreacion || null;
+    const telefono= req.body.telefono || null;
     const fechaCreacion= Date.now();
     const fechaModifacion= Date.now();
     const correo= req.body.correo;
@@ -197,6 +198,7 @@ export const addClientes= async(req,res)=>{
                 tipoCliente:tipoCliente,
                 nombreRepresentante:nombre,
                 sexo:sexo,
+                telefono:telefono,
                 empresa:empresa,
                 direccion:direccion,
                 balance:balance,
@@ -302,6 +304,7 @@ export const modificarClientes= async(req,res)=>{
     }
     else
     {
+
         try {
             const resultado= await clientesModelo.update({
                 nombreRepresentante: nombre!=null?nombre:undefined,
@@ -317,7 +320,7 @@ export const modificarClientes= async(req,res)=>{
                 descripcionModificacion:descripcionModificacion!=null?descripcionModificacion:undefined
             },{
                 where:{
-                    IDCliente:IDCliente
+                    IDCliente
                 }
             })
             
@@ -327,6 +330,7 @@ export const modificarClientes= async(req,res)=>{
             }
             else
             {
+                console.log(resultado)
                 res.status(400).json({'message':'no se ha encontrado al cliente'});
             }
 

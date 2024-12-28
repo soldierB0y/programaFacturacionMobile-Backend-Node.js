@@ -123,6 +123,10 @@ import { DataTypes,DATE,Sequelize } from "sequelize";
         descripcionModificacion:{
             type: DataTypes.STRING,
             allowNull:true
+        },
+        telefono:{
+            type:DataTypes.STRING,
+            allowNull:true
         }
 
     },{
