@@ -1,5 +1,4 @@
 import express from 'express';
-import {getUsuarios, recoverAccount, verificarUsuario} from './controllers/controller.js'
 import db from './database/database.js';
 import cors from 'cors';
 import router from './routes/routes.js';
@@ -15,7 +14,7 @@ try {
 }
 catch(ex)
 {
-    console.log('error');
+    console.log('error'+ex);
 }
 
 

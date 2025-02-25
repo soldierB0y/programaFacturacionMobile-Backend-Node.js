@@ -1,133 +1,206 @@
 import db from '../database/database.js';
-import { DataTypes,DATE,Sequelize } from "sequelize";
+import { DataTypes,Sequelize } from "sequelize";
 
 
 
 
-// Crear conexión a la base de datos
+
+
+//ordenes
+export const ordenesModelo = db.define('ordenes', {
+    id_orden: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        primaryKey: true,
+        autoIncrement: true
+    },
+    Numero_Cliente: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+    },
+    Nombre_Cliente: {
+        type: DataTypes.STRING(60),
+        allowNull: true
+    },
+    Telefono: {
+        type: DataTypes.STRING(20),
+        allowNull: true
+    },
+    RNC_Cedula: {
+        type: DataTypes.TEXT,
+        allowNull: true
+    },
+    total: {
+        type: DataTypes.DOUBLE,
+        allowNull: true
+    },
+    total_Compra: {
+        type: DataTypes.DOUBLE,
+        allowNull: true
+    },
+    ITBIS: {
+        type: DataTypes.DOUBLE,
+        allowNull: true
+    },
+    Estado: {
+        type: DataTypes.BOOLEAN,
+        allowNull: true
+    },
+    Nota: {
+        type: DataTypes.TEXT,
+        allowNull: true
+    },
+    Fecha_Creacion: {
+        type: DataTypes.DATE,
+        allowNull: true,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+    },
+    Ultima_Modificacion: {
+        type: DataTypes.DATE,
+        allowNull: true,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+    },
+    id_usuario: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+    },
+    modified_by: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+    },
+    Fecha_Orden: {
+        type: DataTypes.DATE,
+        allowNull: false
+    }
+}, {
+    tableName: 'ordenes',
+    timestamps: false
+});
 
 // Definir el modelo 'usuarios'
 
-    export const usuariosModelo = db.define('usuario', {
-        IDUsuario: {
-            type: DataTypes.BIGINT,
+    export const usuariosModelo = db.define('usuarios', {
+        NomUsu: {
+            type: DataTypes.STRING(300),
             allowNull: false,
-            primaryKey: true, // Definir como clave primaria
-            autoIncrement: true, // Si el ID es autoincremental
+            primaryKey: true
         },
-        IDEmpleado: {
-            type: DataTypes.BIGINT,
+        IDRol: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
+        ConUsu: {
+            type: DataTypes.STRING(500),
+            allowNull: true
+        },
+        Nombre: {
+            type: DataTypes.STRING(300),
+            allowNull: true
+        },
+        Activo: {
+            type: DataTypes.BOOLEAN,
             allowNull: true,
+            defaultValue: 1
         },
-        nombreUsuario: {
-            type: DataTypes.STRING,
+        id_usuario: {
+            type: DataTypes.INTEGER,
             allowNull: false,
+            unique: true,
+            autoIncrement: true
         },
-        clave: {
-            type: DataTypes.STRING,
-            allowNull: false,
+        modified_by: {
+            type: DataTypes.INTEGER,
+            allowNull: true
         },
-        correo:{
-            type: DataTypes.STRING
+        created_by: {
+            type: DataTypes.INTEGER,
+            allowNull: true
         },
-        puesto: {
-            type: DataTypes.STRING,
+        id_Empleado: {
+            type: DataTypes.INTEGER,
+            allowNull: true
         },
-        fechaCreacion: {
+        Fecha_Creacion: {
             type: DataTypes.DATE,
-            defaultValue: Sequelize.NOW, // Fecha predeterminada a la actual
+            allowNull: true
         },
-        fechaModificacion: {
+        Ultima_Modificacion: {
             type: DataTypes.DATE,
-        },
-        descripcionModificacion: {
-            type: DataTypes.STRING,
-        },
-        tokenRecoveryPass:{
-            type:DataTypes.STRING
-        },
-        hourTokenRecoveryPass:
-        {
-            type:DataTypes.DATE
+            allowNull: true
         }
+  
     }, {
         timestamps: false, // Evita agregar automáticamente los campos createdAt y updatedAt
-        tableName: 'usuario', // Nombre de la tabla en la base de datos
+        tableName: 'usuarios', // Nombre de la tabla en la base de datos
     });
     
 //Definir el modelo 'Clientes'
    export const clientesModelo = db.define('clientes',{
-        IDCliente:{
-            type:DataTypes.BIGINT,
-            allowNull:false,
-            primaryKey:true,
-            autoIncrement:true
-        },
-        IDRNC:{
-            type: DataTypes.BIGINT,
-            allowNull:true
-        },
-        nombreRepresentante:{
-            type:DataTypes.STRING,
-            allowNull:true
-        },
-        tipoCliente:{
-            type:DataTypes.STRING,
-            allowNull:true
-        },
-        sexo:{
-            type:DataTypes.CHAR,
-            allowNull:true
-        },
-        cedula:{
-            type: DataTypes.STRING,
-            allowNull:true
-        },
-        empresa:{
-            type: DataTypes.STRING,
-            allowNull:true
-        }
-        ,
-        direccion:{
-            type: DataTypes.STRING,
-            allowNull:true
-        },
-        balance:{
-            type: DataTypes.DOUBLE,
-            allowNull:true
-        },
-        deuda:{
-            type: DataTypes.DOUBLE,
-            allowNull:true
-        },
-        fechaCreacion:{
-            type: DataTypes.DATE,
-            allowNull:true
-        },
-        fechaModificacion:{
-            type: DataTypes.DATE,
-            allowNull:true
-        },
-        correo:{
-            type: DataTypes.STRING,
-            allowNull:true
-        },
-        imagen:{
-            type: DataTypes.BLOB,
-            allowNull:true
-        },
-        montoTotalCompras:{
-            type: DataTypes.DOUBLE,
-            allowNull:true
-        },
-        descripcionModificacion:{
-            type: DataTypes.STRING,
-            allowNull:true
-        },
-        telefono:{
-            type:DataTypes.STRING,
-            allowNull:true
-        }
+    Codigo: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        primaryKey: true
+    },
+    Tipo_Cliente: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false
+    },
+    Nombre_Representante: {
+        type: DataTypes.STRING(1000),
+        allowNull: true
+    },
+    sexo: {
+        type: DataTypes.BOOLEAN,
+        allowNull: true
+    },
+    Cedula_RNC: {
+        type: DataTypes.STRING(30),
+        allowNull: true
+    },
+    Compañia: {
+        type: DataTypes.STRING(40),
+        allowNull: true
+    },
+    Direccion: {
+        type: DataTypes.STRING(90),
+        allowNull: true
+    },
+    Telefono: {
+        type: DataTypes.STRING(30),
+        allowNull: true
+    },
+    Email: {
+        type: DataTypes.STRING(60),
+        allowNull: true
+    },
+    Balance: {
+        type: DataTypes.DOUBLE,
+        allowNull: true
+    },
+    Limite_Credito: {
+        type: DataTypes.DOUBLE,
+        allowNull: true
+    },
+    Ultima_Modificacion: {
+        type: DataTypes.DATE,
+        allowNull: true
+    },
+    Fecha_Creacion: {
+        type: DataTypes.DATE,
+        allowNull: true
+    },
+    Location: {
+        type: DataTypes.STRING(500),
+        allowNull: true
+    },
+    id_usuario: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+    },
+    modified_by: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+    }
 
     },{
         timestamps:false,
@@ -136,75 +209,114 @@ import { DataTypes,DATE,Sequelize } from "sequelize";
 
 //Definir el modelo 'Articulos'
 export const articulosModelo= db.define('articulos',{
-    IDArticulo:{
+    Codigo: {
         type: DataTypes.BIGINT,
-        allowNull:false,
-        autoIncrement:true,
-        primaryKey:true
+        allowNull: false,
+        primaryKey: true,
+        autoIncrement: true
     },
-    IDArticuloMarca:{
-        type:DataTypes.BIGINT,
-        allowNull:true,
+    Descripcion: {
+        type: DataTypes.STRING(120),
+        allowNull: true
     },
-    IDProovedor:{
-        type: DataTypes.BIGINT,
+    Unidad_Medida: {
+        type: DataTypes.STRING(60),
+        allowNull: true
+    },
+    id_Marca: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+    },
+    id_Departamento: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+    },
+    Precio_Compra: {
+        type: DataTypes.DOUBLE,
+        allowNull: true
+    },
+    Precio_Venta: {
+        type: DataTypes.DOUBLE,
+        allowNull: true
+    },
+    Precio_Minimo: {
+        type: DataTypes.DOUBLE,
+        allowNull: true
+    },
+    id_Categoria:{
+        type: DataTypes.INTEGER,
         allowNull:true
     },
-    codigo:{
-        type:DataTypes.STRING,
-        allowNull:false
+    Estado: {
+        type: DataTypes.BOOLEAN,
+        allowNull: true
     },
-    nombreArticulo:{
-        type: DataTypes.STRING,
-        allowNull:false
+    Ultima_Modificacion: {
+        type: DataTypes.DATE,
+        allowNull: true
     },
-    descripcion:{
-        type:DataTypes.STRING,
-        allowNull:true
+    Cambiar: {
+        type: DataTypes.BOOLEAN,
+        allowNull: true
     },
-    imagen:{
-        type:DataTypes.BLOB,
-        allowNull:true
+    Inventario: {
+        type: DataTypes.DOUBLE,
+        allowNull: true
     },
-    precioVenta:{
-        type:DataTypes.DOUBLE,
-        allowNull:false
+    Facturar_sin_Inventario: {
+        type: DataTypes.BOOLEAN,
+        allowNull: true
     },
-    precioCompra:{
-        type:DataTypes.DOUBLE,
-        allowNull:false
+    Fecha_Creacion: {
+        type: DataTypes.DATE,
+        allowNull: true
     },
-    estado:{
-        type:DataTypes.BOOLEAN
+    Alerta_Inventario: {
+        type: DataTypes.DOUBLE,
+        allowNull: true
     },
-    fechaCreacion:{
-        type:DataTypes.DATE,
-        allowNull:false
+    id_usuario: {
+        type: DataTypes.INTEGER,
+        allowNull: true
     },
-    fechaModificacion:{
-        type:DataTypes.DATE,
-        allowNull:false
-    },
-    descripcionModificacion:{
-        type:DataTypes.STRING,
-        allowNull:false
-    },
-    inventario:{
-        type:DataTypes.DOUBLE,
-        allowNull:false
-    },
-    facturarSinInventario:{
-        type:DataTypes.BOOLEAN,
-        allowNull:false
-    },
-    precioModificable:{
-        type:DataTypes.BOOLEAN,
-        allowNull:false
+    modified_by: {
+        type: DataTypes.INTEGER,
+        allowNull: true
     }
-
 },{
     tableName:'articulos',
     timestamps:false
+})
+
+//Categoria
+export const categoriaModelo= db.define('categoria',{
+    id_Categoria:{
+        type:DataTypes.INTEGER,
+        allowNull:true,
+        primaryKey: true,
+        autoIncrement: true
+    },
+    Categoria:{
+        type:DataTypes.STRING,
+        allowNull:true
+    },
+    Fecha_Creacion:{type:DataTypes.DATE,
+        allowNull:true
+    },
+    Ultima_Modificacion:{
+        type:DataTypes.DATE,
+        allowNull:true
+    },
+    id_usuario:{
+        type:DataTypes.INTEGER,
+        allowNull:true
+    },
+    modified_by:{
+        type:DataTypes.INTEGER,
+        allowNull:true
+    }
+},{
+    tableName:'categoria',timestamps:false
 })
 
 //factura
